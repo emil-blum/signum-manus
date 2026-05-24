@@ -338,7 +338,7 @@ export default function SignumManus() {
     const{strokeData}=computed;
     const css=[
       '@keyframes draw { to { stroke-dashoffset: 0; } }',
-      ...strokeData.map((s,i)=>`.s${i}{stroke-dasharray:${s.len.toFixed(2)};stroke-dashoffset:${s.len.toFixed(2)};animation:draw ${s.duration.toFixed(3)}s ${s.animDelay.toFixed(3)}s ${s.timing} forwards}`)
+      ...strokeData.map((s,i)=>{const d=(s.len+strokeW+2).toFixed(2);return`.s${i}{stroke-dasharray:${d};stroke-dashoffset:${d};animation:draw ${s.duration.toFixed(3)}s ${s.animDelay.toFixed(3)}s ${s.timing} forwards}`;})
     ].join('\n    ');
     const paths=strokeData.map((s,i)=>
       `  <path class="s${i}" d="${s.path}" stroke="${inkColor}" fill="none"\n    stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round"/>`
@@ -474,8 +474,8 @@ export default function SignumManus() {
             d={s.path} fill="none" stroke={inkColor}
             strokeWidth={strokeW} strokeLinecap="round" strokeLinejoin="round"
             style={{
-              strokeDasharray:  s.len,
-              strokeDashoffset: s.len,
+              strokeDasharray:  s.len + strokeW + 2,
+              strokeDashoffset: s.len + strokeW + 2,
               animation:`sig_draw ${s.duration.toFixed(3)}s ${s.animDelay.toFixed(3)}s ${s.timing} forwards`,
             }}
           />
